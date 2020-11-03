@@ -5,12 +5,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name="HelloWorldServlet", urlPatterns = "/hello-world")
+@WebServlet(name="HelloWorldServlet", urlPatterns = "/hello")
 public class HelloWorldServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         res.setContentType("text/html");
         PrintWriter out = res.getWriter();
         out.println("<h1>Hello, Bash!</h1>");
-        out.printf("<h2>Hello, %s</h2>", "Chelsea");
+        out.println("<h1>Hello, World!</h1>");
+        //out.printf("<h2>Hello, %s</h2>", "Chelsea");
+
+        String name = req.getParameter("name");
+        out.printf("<h3>Hello, %s!</h3>", name);
     }
 }

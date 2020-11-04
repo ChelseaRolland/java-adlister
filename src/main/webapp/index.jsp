@@ -5,6 +5,9 @@
     <title><%= "some title" %></title>
 </head>
 <body>
+<%--<jsp:include page="partials/navbar.jsp"></jsp:include>--%>
+<jsp:include page="partials/navbar.jsp" />
+
     <c:if test="true">
         <h1>Variable names should be very descriptive</h1>
     </c:if>

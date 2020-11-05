@@ -12,12 +12,12 @@
     <title>View Students</title>
 </head>
 <body>
-<h1>Here are all the Students from Bash!:</h1>
+<h1>Here are all the students!</h1>
 
 <c:forEach var="student" items="${students}">
     <div class="student">
-        <h2>${student.firstname + " " + student.lastname}</h2>
-        <p>Cohort: $ ${student.cohort}</p>
+        <h2>${student.firstName} ${student.lastName}</h2>
+        <p>Cohort ${student.cohort}</p>
     </div>
 </c:forEach>
 

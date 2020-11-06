@@ -10,11 +10,12 @@ import java.io.IOException;
 public class ViewProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
+        String user = (String) session.getAttribute("user");
 
-        if (session.getAttribute("user") == null) {
+        if (user == null) {
             response.sendRedirect("/login");
+        } else {
+            request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
         }
-
-        request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
     }
 }

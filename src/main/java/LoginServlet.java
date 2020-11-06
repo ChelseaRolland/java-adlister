@@ -10,7 +10,10 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        request.setAttribute("loginName", session.getAttribute("user"));
+        if (session.getAttribute("user") != null) {
+            response.sendRedirect("/profile");
+            return;
+        }
         request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
     }
 
@@ -22,11 +25,10 @@ public class LoginServlet extends HttpServlet {
         boolean validAttempt = username.equals("admin") && password.equals("password");
 
         if (validAttempt) {
-            session.setAttribute("user", session.getAttribute("user"));
-            response.sendRedirect("/WEB-INF/profile");
+            session.setAttribute("user", username);
+            response.sendRedirect("/profile");
         } else {
-            response.sendRedirect("/WEB-INF/login");
-            session.setAttribute("loginName", "Please try a valid username and password");
+            response.sendRedirect("/login");
         }
     }
 }

@@ -15,6 +15,13 @@ public class User {
         this.password = password;
     }
 
+    //new input into the database that doesnt have an id yet
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
     public long getId() {
         return id;
     }

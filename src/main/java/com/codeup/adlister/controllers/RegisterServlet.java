@@ -11,37 +11,35 @@ import java.io.IOException;
 
 @WebServlet(name = "controllers.RegisterServlet", urlPatterns = "/register")
 public class RegisterServlet extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO: show the registration form
-        try {
             request.getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // TODO: ensure the submitted information is valid
-        // TODO: create a new user based off of the submitted information
-        // TODO: if a user was successfully created, send them to their profile
-
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        HttpSession session = request.getSession();
-        boolean validTry = false;
+        String passwordConfirm = request.getParameter("password_confirm");
 
-        if (request.getMethod().equalsIgnoreCase("post")){
-                User user = new User (
-                        2,
-                        username,
-                        email,
-                        password
-                );
-                DaoFactory.getUsersDao().insert(user);
-                response.sendRedirect("/profile");
+        // TODO: ensure the submitted information is valid
+        boolean inputHasErrors = username.isEmpty()
+                || email.isEmpty()
+                || password.isEmpty()
+                || (!password.equals(passwordConfirm));
+
+        if (inputHasErrors){
+            response.sendRedirect("/register");
+            return;
         }
+
+        // TODO: create a new user based off of the submitted information
+        User user = new User(username, email, password);
+        DaoFactory.getUsersDao().insert(user);
+        response.sendRedirect("/login");
+
+
+        // TODO: if a user was successfully created, send them to their profile
+
     }
 }

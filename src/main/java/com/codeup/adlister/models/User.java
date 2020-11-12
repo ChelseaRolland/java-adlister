@@ -1,19 +1,25 @@
 package com.codeup.adlister.models;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 public class User {
     private long id;
     private String username;
     private String email;
     private String password;
 
+    //ANYTHING
     public User() {}
 
+    //INSERT
     public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
-        this.password = password;
+        //This makes sure the password is hashed, salted, and encrypted -->This is a great example of encapsulation
+        this.setPassword(password);
     }
 
+    //SELECT
     public User(long id, String username, String email, String password) {
         this.id = id;
         this.username = username;
@@ -50,6 +56,6 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }
 }

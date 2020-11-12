@@ -17,6 +17,11 @@
 <jsp:include page="/WEB-INF/partials/navbar.jsp" />
 <div class="container">
     <h1>Register With Us</h1>
+    <c:if test="${requestScope.registerError != null}">
+        <div class="alert alert-danger" role="alert">
+            ${requestScope.registerError}
+        </div>
+    </c:if>
     <form action="/register" method="POST">
         <div class="form-group">
             <label for="username">Username</label>

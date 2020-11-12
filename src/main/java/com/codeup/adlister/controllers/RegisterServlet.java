@@ -13,6 +13,12 @@ import java.io.IOException;
 public class RegisterServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO: show the registration form
+        HttpSession session = request.getSession();
+        String errorMessage = (String) session.getAttribute("registerError");
+        if (errorMessage != null) {
+            request.setAttribute("registerError", errorMessage);
+            session.removeAttribute("registerError");
+        }
             request.getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
     }
 
@@ -29,6 +35,7 @@ public class RegisterServlet extends HttpServlet {
                 || (!password.equals(passwordConfirm));
 
         if (inputHasErrors){
+            request.getSession().setAttribute("registerError", "There was an error in your registration");
             response.sendRedirect("/register");
             return;
         }

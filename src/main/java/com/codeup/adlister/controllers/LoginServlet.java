@@ -29,7 +29,11 @@ public class LoginServlet extends HttpServlet {
         // TODO: make sure we find a user with that username
         // TODO: check the submitted password against what you have in your database
         boolean validAttempt = false;
-        validAttempt =  session.getAttribute("username") == username && session.getAttribute("password") == password;
+        String databaseUsername = DaoFactory.getUsersDao().findByUsername(username).getUsername();
+        String databasePassword = DaoFactory.getUsersDao().findByUsername(password).getPassword();
+        validAttempt =  session.getAttribute("username").equals(databaseUsername) && session.getAttribute("password").equals(databasePassword);
+        boolean validUsername = DaoFactory.getUsersDao().findByUsername(username) != null;
+
         //DaoFactory.getUsersDao().findByUsername(username) != null;
 
         if (validAttempt) {

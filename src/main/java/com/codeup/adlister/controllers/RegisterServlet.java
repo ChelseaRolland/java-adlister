@@ -26,20 +26,14 @@ public class RegisterServlet extends HttpServlet {
         // TODO: ensure the submitted information is valid
         // TODO: create a new user based off of the submitted information
         // TODO: if a user was successfully created, send them to their profile
+
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        HttpSession session = request.getSession();
         boolean validTry = false;
 
-        HttpSession session = request.getSession();
-        //session.getAttribute("username") == username;
-        boolean testing = DaoFactory.getUsersDao().findByUsername(username) == null;
-        System.out.println("testing = " + testing);
-
         if (request.getMethod().equalsIgnoreCase("post")){
-            validTry = DaoFactory.getUsersDao().findByUsername(username) == null;
-            System.out.println("validTry = " + validTry);
-            if (validTry) {
                 User user = new User (
                         2,
                         username,
@@ -48,12 +42,6 @@ public class RegisterServlet extends HttpServlet {
                 );
                 DaoFactory.getUsersDao().insert(user);
                 response.sendRedirect("/profile");
-            }
-
-
         }
-
-
-
     }
 }
